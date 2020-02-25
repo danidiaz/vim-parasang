@@ -15,4 +15,5 @@ UNDER CONSTRUCTION
 > Even if you do add a scope to a function (we'll talk about that later) you may as well capitalize the first letter of function names anyway. Most Vimscript coders seem to do it, so don't break the convention.
 
 - `:h method` about the `->` style of function and lambda chaining.
+- [how do you get the number of lines in the current file using vimscript?](https://stackoverflow.com/questions/13372621/in-vim-how-do-you-get-the-number-of-lines-in-the-current-file-using-vimscript)
 
