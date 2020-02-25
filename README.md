@@ -13,3 +13,6 @@ UNDER CONSTRUCTION
 - [Vimscript functions must start with a capital letter if they are unscoped!](https://learnvimscriptthehardway.stevelosh.com/chapters/23.html)
 
 > Even if you do add a scope to a function (we'll talk about that later) you may as well capitalize the first letter of function names anyway. Most Vimscript coders seem to do it, so don't break the convention.
+
+- `:h method` about the `->` style of function and lambda chaining.
+
