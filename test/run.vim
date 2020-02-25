@@ -5,8 +5,9 @@ let pos = getpos('.')
 let expected_pos = pos
 let expected = { 'f' : { 'pos' : expected_pos } }
 let p = parasang#Make()
-let Parse = p.parse
-let actual = p.fail->Parse(pos,line('$'))
+let s:fail = p.fail
+let s:Parse = p.Parse
+let actual = s:fail->s:Parse(pos,line('$'))
 call assert_equal(expected,actual,"basic test")
 bwipeout!
 
