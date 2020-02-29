@@ -21,7 +21,7 @@ endfunction
 
 function s:Eof(pos,max_lnum)
     if a:pos[0] > a:max_lnum
-        return { 's' : '' }
+        return { 's' : [a:pos,''] }
     else
     return s:Fail(a:pos,a:max_lnum)
 endfunction 

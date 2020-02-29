@@ -14,7 +14,7 @@ bwipeout!
 let s:testfiles = {'input':'test_001.txt'}
 execute ":edit" s:testfiles.input
 let s:pos = [2,0]
-let s:expected = { 's' : '' } 
+let s:expected = { 's' : [s:pos,''] } 
 let s:actual = s:eof->s:Parse(s:pos,line('$'))
 call assert_equal(s:expected,s:actual,"eof - at eof")
 bwipeout!
