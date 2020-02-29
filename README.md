@@ -7,6 +7,8 @@ UNDER CONSTRUCTION
 
 - `:h search()` 
 - `:h searchpos()` Example `:echo searchpos("\\%#fooo","ceW")`
+- `:h match()`
+- `echo match('aaa bbb ccc','^bbb',4)`
 - [How can I get a token from a search in a whole file in vimscript?](https://stackoverflow.com/questions/1228100/substituting-zero-width-match-in-vim-script) Strange that there isn't a more direct way.
 - `:h \%#` Matches current cursor position.
 - [Functional Parsing - Computerphile](https://www.youtube.com/watch?v=dDtZLm7HIJs)
@@ -18,3 +20,4 @@ UNDER CONSTRUCTION
 - [how do you get the number of lines in the current file using vimscript?](https://stackoverflow.com/questions/13372621/in-vim-how-do-you-get-the-number-of-lines-in-the-current-file-using-vimscript)
 
 - `:h local-variable`
+
