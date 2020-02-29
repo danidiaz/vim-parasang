@@ -17,3 +17,4 @@ UNDER CONSTRUCTION
 - `:h method` about the `->` style of function and lambda chaining.
 - [how do you get the number of lines in the current file using vimscript?](https://stackoverflow.com/questions/13372621/in-vim-how-do-you-get-the-number-of-lines-in-the-current-file-using-vimscript)
 
+- `:h local-variable`

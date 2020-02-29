@@ -4,13 +4,14 @@ function parasang#Make()
     return { 'Parse' : funcref('s:Parse'), 'fail' : funcref('s:Fail') } 
 endfunction
 
-function s:Parse(parser,pos,stopline)
-    call setpos('.',a:pos)
-    return a:parser(a:stopline)
+" pos a two-element list of [current_lnum, last_parsed_col] 
+"   where last_parse_col should be 0 for new columns
+function s:Parse(parser,pos,max_lnum)
+    return a:parser(a:pos,a:max_lnum)
 endfunction
 
-function s:Fail(stopline)
-    let pos = getpos('.')
-    return { 'f' : { 'pos' : pos } }
+function s:Fail(pos,max_lnum)
+    return { 'f' : { 'pos' : a:pos } }
 endfunction
+
 
