@@ -22,3 +22,16 @@ UNDER CONSTRUCTION
 - `:h local-variable`
 - [Get the length/number of colums in the current line/row](https://vi.stackexchange.com/questions/21086/get-the-length-number-of-colums-in-the-current-line-row)
 
+- `:h func-closure`
+
+Non-lambda closures defined inside functions are available outside the
+functions, that's gross.
+
+```
+    function Foo()
+        function! Bar() closure
+            return 7
+        endfunction
+    endfunction
+```
+
