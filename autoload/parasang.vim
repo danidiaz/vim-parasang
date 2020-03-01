@@ -5,7 +5,8 @@ function parasang#Make()
         \ { 
         \ 'Parse' : funcref('s:Parse'), 
         \ 'fail' : funcref('s:Fail'), 
-        \ 'eof' : funcref('s:Eof')  
+        \ 'eof' : funcref('s:Eof'),
+        \ 'eol' : funcref('s:Eol')  
         \ } 
 endfunction
 
@@ -23,6 +24,18 @@ function s:Eof(pos,max_lnum)
     if a:pos[0] > a:max_lnum
         return { 's' : [a:pos,''] }
     else
+    return s:Fail(a:pos,a:max_lnum)
+endfunction 
+
+function s:Eol(pos,max_lnum)
+    let [lnum,cnum] = a:pos
+    if l:lnum > a:max_lnum
+        return s:Fail(a:pos,a:max_lnum)
+    endif
+    let llen = strlen(getline(l:lnum))
+    if l:cnum == l:llen
+        return { 's' : [ [l:lnum+1,0], ''] }
+    endif
     return s:Fail(a:pos,a:max_lnum)
 endfunction 
 

@@ -20,4 +20,5 @@ UNDER CONSTRUCTION
 - [how do you get the number of lines in the current file using vimscript?](https://stackoverflow.com/questions/13372621/in-vim-how-do-you-get-the-number-of-lines-in-the-current-file-using-vimscript)
 
 - `:h local-variable`
+- [Get the length/number of colums in the current line/row](https://vi.stackexchange.com/questions/21086/get-the-length-number-of-colums-in-the-current-line-row)
 
