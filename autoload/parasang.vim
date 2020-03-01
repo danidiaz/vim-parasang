@@ -4,7 +4,7 @@ function parasang#Make()
     return 
         \ { 
         \ 'Parse' : funcref('s:Parse'), 
-        \ 'fail' : funcref('s:Fail'), 
+        \ 'Fail' : funcref('s:Fail'), 
         \ 'eof' : funcref('s:Eof'),
         \ 'eol' : funcref('s:Eol')  
         \ } 
@@ -16,26 +16,33 @@ function s:Parse(parser,pos,max_lnum)
     return a:parser(a:pos,a:max_lnum)
 endfunction
 
-function s:Fail(pos,max_lnum)
-    return { 'f' : { 'pos' : a:pos } }
+function s:Fail(msg)
+    return { pos, max_lum -> s:Failure(pos,a:msg) }
 endfunction
 
 function s:Eof(pos,max_lnum)
     if a:pos[0] > a:max_lnum
-        return { 's' : [a:pos,''] }
+        return s:Success(a:pos,'')
     else
-    return s:Fail(a:pos,a:max_lnum)
+    return s:Failure(a:pos,'eof')
 endfunction 
 
 function s:Eol(pos,max_lnum)
     let [lnum,cnum] = a:pos
     if l:lnum > a:max_lnum
-        return s:Fail(a:pos,a:max_lnum)
+        return s:Failure(a:pos,'eol past eof')
     endif
-    let llen = strlen(getline(l:lnum))
-    if l:cnum == l:llen
-        return { 's' : [ [l:lnum+1,0], ''] }
+    if l:cnum == strlen(getline(l:lnum))
+        return s:Success([l:lnum + 1,0],'')
     endif
-    return s:Fail(a:pos,a:max_lnum)
+    return s:Failure(a:pos,'not at eol')
 endfunction 
+
+function s:Failure(pos,msg)
+    return {'f' : [a:pos,a:msg]}
+endfunction
+
+function s:Success(pos,val)
+    return {'s' : [a:pos,a:val]}
+endfunction
 
