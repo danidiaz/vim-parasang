@@ -6,7 +6,8 @@ function parasang#Make()
         \ 'Parse' : funcref('s:Parse'), 
         \ 'Fail' : funcref('s:Fail'), 
         \ 'eof' : funcref('s:Eof'),
-        \ 'eol' : funcref('s:Eol')  
+        \ 'eol' : funcref('s:Eol'),
+        \ 'Then' : funcref('s:Then')  
         \ } 
 endfunction
 
@@ -36,6 +37,19 @@ function s:Eol(pos,max_lnum)
         return s:Success([l:lnum + 1,0],'')
     endif
     return s:Failure(a:pos,'not at eol')
+endfunction 
+
+function s:Then(m,f)
+    function! s:ThenClos(pos, max_lnum) closure
+        let r = a:m(a:pos, a:max_lnum)
+        if has_key(l:r,'f')
+            return r
+        else
+            let [new_pos, value] = r.s 
+            return a:f(l:value)(l:new_pos,a:max_lnum)
+        endif
+    endfunction
+    return funcref('s:ThenClos')
 endfunction 
 
 function s:Failure(pos,msg)

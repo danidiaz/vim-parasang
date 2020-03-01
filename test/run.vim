@@ -3,6 +3,7 @@ let s:eof = p.eof
 let s:eol = p.eol
 let s:Fail = p.Fail
 let s:Parse = p.Parse
+let s:Then = p.Then
 
 function s:MuteMessage(result)
     if has_key(a:result,'f')
@@ -51,5 +52,15 @@ let s:expected = { 'f' : [ [1,1], ''] }
 let s:actual = s:eol->s:Parse(s:pos,line('$'))
 call assert_equal(s:expected,s:MuteMessage(s:actual),"eol - not at eol")
 bwipeout!
+
+let s:testfiles = {'input':'test_002_twoblanklines.txt'}
+execute ":edit" s:testfiles.input
+let s:pos = [1,0]
+let s:expected = { 'f' : [ [2,0], ''] }
+let s:actual = s:eol->s:Then({ _ -> s:eof})->s:Parse(s:pos,line('$'))
+call assert_equal(s:expected,s:MuteMessage(s:actual),"eol but not eof")
+bwipeout!
+
+
 
 echo v:errors
