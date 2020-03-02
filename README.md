@@ -35,3 +35,5 @@ functions, that's gross.
     endfunction
 ```
 
+- [(micro)benchmarking Vimscript closures](https://medium.com/@danidiaz/micro-benchmarking-vimscript-closures-8eceaa865ae7)
+
