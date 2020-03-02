@@ -40,17 +40,26 @@ function s:Eol(pos,max_lnum)
 endfunction 
 
 function s:Then(m,f)
-    function! s:ThenClos(pos, max_lnum) closure
-        let r = a:m(a:pos, a:max_lnum)
-        if has_key(l:r,'f')
-            return r
-        else
-            let [new_pos, value] = r.s 
-            return a:f(l:value)(l:new_pos,a:max_lnum)
-        endif
-    endfunction
-    return funcref('s:ThenClos')
+    return funcref('s:ThenClos',[a:m,a:f])
 endfunction 
+
+function s:ThenClos(m, f, pos, max_lnum)
+    let r = a:m(a:pos, a:max_lnum)
+    if has_key(l:r,'f')
+        return r
+    else
+        let [new_pos, value] = r.s 
+        return a:f(l:value)(l:new_pos,a:max_lnum)
+    endif
+endfunction
+
+function s:_Then(m,n)
+    return { post, max_lnum -> s:Then({ _ -> n}) }
+endfunction
+
+" function s:Then_(m,n)
+"     return { post, max_lnum -> s:Then({ _ -> n}) }
+" endfunction
 
 function s:Failure(pos,msg)
     return {'f' : [a:pos,a:msg]}
