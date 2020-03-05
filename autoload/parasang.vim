@@ -7,7 +7,9 @@ function parasang#Make()
         \ 'Fail' : funcref('s:Fail'), 
         \ 'eof' : funcref('s:Eof'),
         \ 'eol' : funcref('s:Eol'),
-        \ 'Then' : funcref('s:Then')  
+        \ 'Then' : funcref('s:Then') ,
+        \ '_Then' : funcref('s:_Then'),  
+        \ 'Then_' : funcref('s:Then_')  
         \ } 
 endfunction
 
@@ -46,15 +48,45 @@ endfunction
 function s:ThenClos(m, f, pos, max_lnum)
     let r = a:m(a:pos, a:max_lnum)
     if has_key(l:r,'f')
-        return r
+        return l:r
     else
-        let [new_pos, value] = r.s 
+        let [new_pos, value] = l:r.s 
         return a:f(l:value)(l:new_pos,a:max_lnum)
     endif
 endfunction
 
 function s:_Then(m,n)
-    return { post, max_lnum -> s:Then({ _ -> n}) }
+    return funcref('s:_ThenClos',[a:m,a:n])
+endfunction
+
+function s:_ThenClos(m, n, pos, max_lnum)
+    let r = a:m(a:pos, a:max_lnum)
+    if has_key(l:r,'f')
+        return l:r
+    else
+        let [new_pos, @_] = l:r.s 
+        return a:n(l:new_pos,a:max_lnum)
+    endif
+endfunction
+
+function s:Then_(m,n)
+    return funcref('s:ThenClos_',[a:m,a:n])
+endfunction 
+
+function s:ThenClos_(m, n, pos, max_lnum)
+    let m_r = a:m(a:pos, a:max_lnum)
+    if has_key(l:m_r,'f')
+        return l:m_r
+    else
+        let [m_new_pos, m_value] = l:m_r.s 
+        let n_r = a:n(l:m_new_pos,a:max_lnum)
+        if has_key(l:n_r,'f')
+            return l:n_r
+        else
+            let [n_new_pos, @_] = l:rn.s 
+            return Success(n_new_pos,m_value)
+        endif
+    endif
 endfunction
 
 " function s:Then_(m,n)

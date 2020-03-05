@@ -4,6 +4,8 @@ let s:eol = p.eol
 let s:Fail = p.Fail
 let s:Parse = p.Parse
 let s:Then = p.Then
+let s:_Then = p._Then
+let s:Then_ = p.Then_
 
 function s:MuteMessage(result)
     if has_key(a:result,'f')
@@ -58,9 +60,23 @@ execute ":edit" s:testfiles.input
 let s:pos = [1,0]
 let s:expected = { 'f' : [ [2,0], ''] }
 let s:actual = s:eol->s:Then({ _ -> s:eof})->s:Parse(s:pos,line('$'))
-call assert_equal(s:expected,s:MuteMessage(s:actual),"eol but not eof")
+call assert_equal(s:expected,s:MuteMessage(s:actual),"eol but not eof - Then")
 bwipeout!
 
+let s:testfiles = {'input':'test_002_twoblanklines.txt'}
+execute ":edit" s:testfiles.input
+let s:pos = [1,0]
+let s:expected = { 'f' : [ [2,0], ''] }
+let s:actual = s:eol->s:_Then(s:eof)->s:Parse(s:pos,line('$'))
+call assert_equal(s:expected,s:MuteMessage(s:actual),"eol but not eof - _Then")
+bwipeout!
 
+let s:testfiles = {'input':'test_002_twoblanklines.txt'}
+execute ":edit" s:testfiles.input
+let s:pos = [1,0]
+let s:expected = { 'f' : [ [2,0], ''] }
+let s:actual = s:eol->s:Then_(s:eof)->s:Parse(s:pos,line('$'))
+call assert_equal(s:expected,s:MuteMessage(s:actual),"eol but not eof - Then_")
+bwipeout!
 
 echo v:errors
